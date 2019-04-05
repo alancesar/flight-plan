@@ -46,7 +46,8 @@ public class ItineraryProcessor {
                             ArrayList<Route> routesList = new ArrayList<>(itinerary.getRoutes());
                             routesList.add(match);
 
-                            return new Itinerary(routesList, destination.equals(match.getDestination()), alternativeRoutes);
+                            return new Itinerary(routesList, destination.equals(
+                                    match.getDestination()), alternativeRoutes);
                         }
                     }
                     return null;

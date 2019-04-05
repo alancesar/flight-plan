@@ -4,8 +4,9 @@ import org.alancesar.itinerary.FullItineraryNameGenerator;
 import org.alancesar.model.BestRoute;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
-import org.alancesar.route.BestRouteProcessor;
 import org.alancesar.processor.ItineraryProcessor;
+import org.alancesar.repository.CsvRouteRepository;
+import org.alancesar.route.BestRouteProcessor;
 import org.alancesar.route.RouteProcessor;
 import org.alancesar.service.RouteService;
 
@@ -19,8 +20,10 @@ public class Main {
         String destination = "CDG";
 
         ItineraryProcessor processor = new ItineraryProcessor();
+        RouteService service = new RouteService(
+                new CsvRouteRepository("/Users/acesar/Downloads/test/input-file.txt"));
 
-        List<Route> routes = new RouteService().getRoutes();
+        List<Route> routes = service.getRoutes();
 
         List<Itinerary> starter = processor.findStarterItinerary(origin, destination, routes);
         List<Itinerary> itineraries = processor.getItineraries(routes, starter, destination);
