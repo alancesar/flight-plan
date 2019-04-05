@@ -1,0 +1,29 @@
+package org.alancesar.service;
+
+import org.alancesar.model.Route;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class RouteService {
+
+    private static final List<Route> routes;
+
+    static {
+        // TODO read CSV file
+        routes = Arrays.asList(
+                new Route("GRU", "BRC", 10),
+                new Route("BRC", "SCL", 5),
+                new Route("GRU", "CDG", 75),
+                new Route("GRU", "SCL", 20),
+                new Route("GRU", "ORL", 56),
+                new Route("ORL", "CDG", 5),
+                new Route("SCL", "ORL", 20),
+                new Route("BRC", "CDG", 35)
+        );
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+}
