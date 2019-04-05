@@ -1,10 +1,10 @@
 package org.alancesar;
 
 import org.alancesar.itinerary.FullItineraryNameGenerator;
+import org.alancesar.itinerary.ItineraryProcessor;
 import org.alancesar.model.BestRoute;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
-import org.alancesar.processor.ItineraryProcessor;
 import org.alancesar.repository.CsvRouteRepository;
 import org.alancesar.route.BestRouteProcessor;
 import org.alancesar.route.RouteProcessor;
@@ -19,17 +19,17 @@ public class Main {
         String origin = "GRU";
         String destination = "CDG";
 
-        ItineraryProcessor processor = new ItineraryProcessor();
         RouteService service = new RouteService(
-                new CsvRouteRepository("/Users/acesar/Downloads/test/input-file.txt"));
+                new CsvRouteRepository("/Users/acesar/avenuecode/flight-plan/flight-plan-api/src/main/resources/routes.csv"));
 
         List<Route> routes = service.getRoutes();
+        ItineraryProcessor processor = new ItineraryProcessor(routes);
 
-        List<Itinerary> starter = processor.findStarterItinerary(origin, destination, routes);
-        List<Itinerary> itineraries = processor.getItineraries(routes, starter, destination);
+        List<Itinerary> starter = processor.findStarterItineraries(origin, destination);
+        List<Itinerary> itineraries = processor.findItineraries(starter, destination);
 
-        RouteProcessor routeProcessor = new BestRouteProcessor();
-        BestRoute bestRoute = routeProcessor.find(itineraries, new FullItineraryNameGenerator(">>"));
+        RouteProcessor routeProcessor = new BestRouteProcessor(new FullItineraryNameGenerator(">>"));
+        BestRoute bestRoute = routeProcessor.find(itineraries);
 
         System.out.println(bestRoute.getRoute());
         System.out.println(bestRoute.getPrice());

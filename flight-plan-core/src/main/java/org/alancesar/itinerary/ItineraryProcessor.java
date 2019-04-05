@@ -1,4 +1,4 @@
-package org.alancesar.processor;
+package org.alancesar.itinerary;
 
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
@@ -11,14 +11,20 @@ import java.util.stream.Collectors;
 
 public class ItineraryProcessor {
 
-    public List<Itinerary> findStarterItinerary(String origin, String destination, List<Route> routes) {
+    private final List<Route> routes;
+
+    public ItineraryProcessor(List<Route> routes) {
+        this.routes = routes;
+    }
+
+    public List<Itinerary> findStarterItineraries(String origin, String destination) {
         return routes.stream()
                 .filter(route -> origin.equals(route.getOrigin()))
                 .map(route -> new Itinerary(Arrays.asList(route), destination.equals(route.getDestination())))
                 .collect(Collectors.toList());
     }
 
-    public List<Itinerary> getItineraries(List<Route> routes, List<Itinerary> starter, String destination) {
+    public List<Itinerary> findItineraries(List<Itinerary> starter, String destination) {
         //TODO check to avoid eternal loops
 
         List<Itinerary> itineraries = starter.stream()
@@ -58,7 +64,7 @@ public class ItineraryProcessor {
         List<Itinerary> clean = handleAlternativeRoutes(itineraries, destination);
 
         if (!isDone(clean)) {
-            return getItineraries(routes, clean, destination);
+            return findItineraries(clean, destination);
         }
 
         return clean;

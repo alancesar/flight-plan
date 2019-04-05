@@ -1,8 +1,8 @@
 package org.alancesar;
 
+import org.alancesar.itinerary.FullItineraryNameGenerator;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
-import org.alancesar.itinerary.FullItineraryNameGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
