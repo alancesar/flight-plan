@@ -1,29 +1,33 @@
 package org.alancesar.service;
 
 import org.alancesar.model.Route;
+import org.alancesar.repository.RouteRepository;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class RouteService {
 
-    private static final List<Route> routes;
+    private final RouteRepository repository;
 
-    static {
-        // TODO read CSV file
-        routes = Arrays.asList(
-                new Route("GRU", "BRC", 10),
-                new Route("BRC", "SCL", 5),
-                new Route("GRU", "CDG", 75),
-                new Route("GRU", "SCL", 20),
-                new Route("GRU", "ORL", 56),
-                new Route("ORL", "CDG", 5),
-                new Route("SCL", "ORL", 20),
-                new Route("BRC", "CDG", 35)
-        );
+    private Function<Route, String> routeToString = (route) -> String.format(
+            "%s,%s,%.0f\r\n", route.getOrigin(), route.getDestination(), route.getPrice());
+
+    private Function<String, Route> stringToRoute = (line) -> {
+        String[] items = line.split(",");
+        Float price = Float.valueOf(items[2]);
+        return new Route(items[0], items[1], price);
+    };
+
+    public RouteService(RouteRepository repository) {
+        this.repository = repository;
     }
 
     public List<Route> getRoutes() {
-        return routes;
+        return repository.readAll(stringToRoute);
+    }
+
+    public void save(Route route) {
+        repository.write(route, routeToString);
     }
 }
