@@ -6,19 +6,11 @@ import org.alancesar.model.Route;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ItineraryProcessorTest {
 
-    private final List<Route> routes = Arrays.asList(
-            new Route("GRU", "BRC", 10),
-            new Route("BRC", "SCL", 5),
-            new Route("GRU", "CDG", 75),
-            new Route("GRU", "SCL", 20),
-            new Route("GRU", "ORL", 56),
-            new Route("ORL", "CDG", 5),
-            new Route("SCL", "ORL", 20));
+    private final List<Route> routes = new RoutesGenerator().generate();
 
     @Test
     public void findStarterRoutes() {
