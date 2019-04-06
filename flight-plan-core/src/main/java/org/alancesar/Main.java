@@ -10,28 +10,45 @@ import org.alancesar.route.BestRouteProcessor;
 import org.alancesar.route.RouteProcessor;
 import org.alancesar.service.RouteService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        String origin = "GRU";
-        String destination = "CDG";
+        if (args.length != 1) {
+            System.out.println("É necessário informar o path do arquivo de rotas!");
+            return;
+        }
 
-        RouteService service = new RouteService(
-                new CsvRouteRepository("../flight-plan-api/src/main/resources/routes.csv"));
+        String path = args[0];
+        RouteService service = new RouteService(new CsvRouteRepository(path));
 
         List<Route> routes = service.getRoutes();
         ItineraryProcessor processor = new ItineraryProcessor(routes);
 
-        List<Itinerary> starter = processor.findStarterItineraries(origin, destination);
-        List<Itinerary> itineraries = processor.findItineraries(starter, destination);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        RouteProcessor routeProcessor = new BestRouteProcessor(new FullItineraryNameGenerator(">>"));
-        BestRoute bestRoute = routeProcessor.find(itineraries);
+        while (true) {
+            System.out.println("Please type the origin: ");
+            String origin = reader.readLine().toUpperCase();
+            System.out.println("And the destination: ");
+            String destination = reader.readLine().toUpperCase();
 
-        System.out.println(bestRoute.getRoute());
-        System.out.println(bestRoute.getPrice());
+            List<Itinerary> starter = processor.findStarterItineraries(origin, destination);
+            List<Itinerary> itineraries = processor.findItineraries(starter, destination);
+
+            if (itineraries.isEmpty()) {
+                System.out.println("Sorry, any route was found.");
+            } else {
+                RouteProcessor routeProcessor = new BestRouteProcessor(new FullItineraryNameGenerator("-"));
+                BestRoute bestRoute = routeProcessor.find(itineraries);
+                System.out.println(String.format("Best route: %s > %.0f", bestRoute.getRoute(), bestRoute.getPrice()));
+            }
+        }
     }
 }
