@@ -5,8 +5,8 @@ import org.alancesar.itinerary.ItineraryProcessor;
 import org.alancesar.model.BestRoute;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
-import org.alancesar.route.BestRouteProcessor;
-import org.alancesar.route.RouteProcessor;
+import org.alancesar.route.BestRouteHandler;
+import org.alancesar.route.RouteHandler;
 import org.alancesar.service.RouteService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +31,7 @@ public class FlightPlanController {
     public BestRoute getBestRoute(@RequestParam("origin") String origin,
                                   @RequestParam("destination") String destination) {
 
-        List<Route> routes = service.getRoutes();
+        List<Route> routes = service.getAll();
         ItineraryProcessor processor = new ItineraryProcessor(routes);
 
         List<Itinerary> starter = processor.findStarterItineraries(origin, destination);
@@ -41,8 +41,8 @@ public class FlightPlanController {
             return null;
         }
 
-        RouteProcessor routeProcessor = new BestRouteProcessor(itineraryNameGenerator);
-        return routeProcessor.find(itineraries);
+        RouteHandler routeHandler = new BestRouteHandler(itineraryNameGenerator);
+        return routeHandler.find(itineraries);
     }
 
     @PostMapping("/routes")
