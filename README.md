@@ -8,7 +8,7 @@
 
 ### flight-plan-core (command line tool)
 
-Build the application using the Maven command line tool:
+Build the `flight-plan-core` application using the Maven command line tool:
 ```shell
 cd flight-plan-core
 mvn clean package
@@ -22,7 +22,7 @@ Follow the screen instructions to get the best route for your trip and have a ni
 
 ### fligh-plan-api (REST API)
 
-Build and install the `flight-plan-core` (if you haven't done it yet):
+Build and install the `flight-plan-core` application (if you haven't done it yet):
 ```shell
 cd flight-plan-core
 mvn clean install
