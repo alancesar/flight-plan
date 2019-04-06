@@ -34,7 +34,7 @@ cd flight-plan-api
 mvn spring-boot:run
 ```
 
-If nothing gets wrong, the service will run in `8080` port.
+If nothing goes wrong, the service will run in `8080` port.
 
 #### Get the best route
 Call a `GET` call at `http://localhost:8080/v1/api/routes/best` with:  
@@ -75,3 +75,22 @@ curl -X POST \
 ```
 **Expected response**
 `200`
+
+## Project sctructure
+- flight-plan-core
+  - itinerary
+    - Itinerary stuff as name generator and the logic the find the possible routes
+  - model
+    - The POJO's models
+  - repository
+    - Persistence logic
+  - route
+    - Route stuff as logic to find the best price route
+  - service
+    - Encapsulates the repository logic into a single interface
+- flight-plan-api
+  - controller
+    - The endpoints
+
+## Why this architecture design?
+I've tried to follow the Clean Architecture which defines that classes should have a simple responsibility and split the logic into layers based in their specializations.
