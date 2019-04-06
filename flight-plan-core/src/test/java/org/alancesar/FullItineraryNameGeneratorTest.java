@@ -12,7 +12,7 @@ import java.util.Collections;
 public class FullItineraryNameGeneratorTest {
 
     @Test
-    public void testLongName() {
+    public void longName() {
         Itinerary itinerary = new Itinerary(
                 Arrays.asList(
                         new Route("GRU", "BRC", 0),
@@ -22,20 +22,20 @@ public class FullItineraryNameGeneratorTest {
                 true);
 
         String routeName = new FullItineraryNameGenerator("-").generate(itinerary);
-        Assertions.assertEquals(routeName, "GRU - BRC - SCL - ORL - CDG");
+        Assertions.assertEquals("GRU - BRC - SCL - ORL - CDG", routeName);
     }
 
     @Test
-    public void testShortName() {
+    public void shortName() {
         Itinerary itinerary = new Itinerary(Arrays.asList(new Route("GRU", "BRC", 0)), true);
         String routeName = new FullItineraryNameGenerator(">>").generate(itinerary);
-        Assertions.assertEquals(routeName, "GRU >> BRC");
+        Assertions.assertEquals("GRU >> BRC", routeName);
     }
 
     @Test
-    public void testNoName() {
+    public void noName() {
         Itinerary itinerary = new Itinerary(Collections.emptyList(), true);
         String routeName = new FullItineraryNameGenerator("doesn't matter").generate(itinerary);
-        Assertions.assertEquals(routeName, "");
+        Assertions.assertEquals("", routeName);
     }
 }
