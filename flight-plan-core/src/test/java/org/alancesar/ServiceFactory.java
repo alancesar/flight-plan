@@ -1,20 +1,26 @@
 package org.alancesar;
 
+import org.alancesar.model.Route;
 import org.alancesar.repository.CsvRouteRepository;
 import org.alancesar.service.RouteService;
+import org.alancesar.service.Service;
 
 import java.io.File;
 import java.io.IOException;
 
-public class ServiceFactory {
+class ServiceFactory {
 
-    public static String path;
+    private static String path;
 
-    public static RouteService getInstance() {
+    static Service<Route> getInstance() {
         try {
             ServiceFactory.path = String.format("%s%s.csv", System.getProperty("java.io.tmpdir"),
                     System.currentTimeMillis());
-            new File(path).createNewFile();
+
+            if (!new File(path).createNewFile()) {
+                throw new IOException("Cannot create the CSV file");
+            }
+
             return new RouteService(new CsvRouteRepository(path));
         } catch (IOException e) {
             e.printStackTrace();
@@ -23,7 +29,9 @@ public class ServiceFactory {
         return null;
     }
 
-    public static void clean() {
-        new File(path).delete();
+    static void clean() {
+        if (!new File(path).delete()) {
+            System.out.println("Error on clean command");
+        }
     }
 }

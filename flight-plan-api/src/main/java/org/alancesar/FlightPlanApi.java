@@ -2,8 +2,10 @@ package org.alancesar;
 
 import org.alancesar.itinerary.FullItineraryNameGenerator;
 import org.alancesar.itinerary.ItineraryNameGenerator;
+import org.alancesar.model.Route;
 import org.alancesar.repository.CsvRouteRepository;
 import org.alancesar.service.RouteService;
+import org.alancesar.service.Service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +26,7 @@ public class FlightPlanApi {
     }
 
     @Bean
-    public RouteService getRouteService() {
+    public Service<Route> getRouteService() {
         try {
             String path = new ClassPathResource("routes.csv").getFile().getAbsolutePath();
             CsvRouteRepository repository = new CsvRouteRepository(path);

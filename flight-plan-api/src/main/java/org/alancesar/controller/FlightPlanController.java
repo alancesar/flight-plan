@@ -7,7 +7,7 @@ import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
 import org.alancesar.route.BestRouteHandler;
 import org.alancesar.route.RouteHandler;
-import org.alancesar.service.RouteService;
+import org.alancesar.service.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +20,9 @@ import java.util.List;
 public class FlightPlanController {
 
     private ItineraryNameGenerator itineraryNameGenerator;
-    private RouteService service;
+    private Service<Route> service;
 
-    public FlightPlanController(ItineraryNameGenerator itineraryNameGenerator, RouteService service) {
+    public FlightPlanController(ItineraryNameGenerator itineraryNameGenerator, Service<Route> service) {
         this.itineraryNameGenerator = itineraryNameGenerator;
         this.service = service;
     }

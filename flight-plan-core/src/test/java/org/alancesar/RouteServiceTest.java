@@ -1,22 +1,22 @@
 package org.alancesar;
 
 import org.alancesar.model.Route;
-import org.alancesar.service.RouteService;
+import org.alancesar.service.Service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class RouteServiceTest {
+class RouteServiceTest {
 
-    private RouteService service = ServiceFactory.getInstance();
+    private Service<Route> service = ServiceFactory.getInstance();
 
     @Test
-    public void saveAndRead() {
+    void saveAndRead() {
         Route route = new Route("ORI", "DES", 10);
 
         service.save(route);
-        List<Route> routes = service.getRoutes();
+        List<Route> routes = service.getAll();
 
         Assertions.assertEquals(1, routes.size());
         Assertions.assertEquals(route.getOrigin(), routes.get(0).getOrigin());

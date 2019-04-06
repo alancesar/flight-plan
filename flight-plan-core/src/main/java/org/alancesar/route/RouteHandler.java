@@ -5,7 +5,7 @@ import org.alancesar.model.Itinerary;
 
 import java.util.List;
 
-public interface RouteProcessor {
+public interface RouteHandler {
 
     BestRoute find(List<Itinerary> itineraries);
 }
