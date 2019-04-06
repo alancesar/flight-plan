@@ -2,14 +2,17 @@ package org.alancesar.model;
 
 public class Route {
 
-    private final String origin;
-    private final String destination;
-    private final float price;
+    private String origin;
+    private String destination;
+    private double price;
 
-    public Route(String origin, String destination, float price) {
+    public Route(String origin, String destination, double price) {
         this.origin = origin;
         this.destination = destination;
         this.price = price;
+    }
+
+    public Route() {
     }
 
     public String getOrigin() {
@@ -20,7 +23,7 @@ public class Route {
         return destination;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 }

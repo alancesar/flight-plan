@@ -30,6 +30,7 @@ public class FlightPlanApi {
             CsvRouteRepository repository = new CsvRouteRepository(path);
             return new RouteService(repository);
         } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;

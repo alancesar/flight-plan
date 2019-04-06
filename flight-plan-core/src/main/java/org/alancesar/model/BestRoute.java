@@ -3,9 +3,9 @@ package org.alancesar.model;
 public class BestRoute {
 
     private final String route;
-    private final float price;
+    private final double price;
 
-    public BestRoute(String route, float price) {
+    public BestRoute(String route, double price) {
         this.route = route;
         this.price = price;
     }
@@ -14,7 +14,7 @@ public class BestRoute {
         return route;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 }

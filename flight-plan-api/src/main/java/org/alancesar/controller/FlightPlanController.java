@@ -42,9 +42,7 @@ public class FlightPlanController {
         }
 
         RouteProcessor routeProcessor = new BestRouteProcessor(itineraryNameGenerator);
-        BestRoute bestRoute = routeProcessor.find(itineraries);
-
-        return bestRoute;
+        return routeProcessor.find(itineraries);
     }
 
     @PostMapping("/routes")

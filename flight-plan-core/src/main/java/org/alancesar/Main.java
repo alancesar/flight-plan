@@ -20,7 +20,7 @@ public class Main {
         String destination = "CDG";
 
         RouteService service = new RouteService(
-                new CsvRouteRepository("/Users/acesar/avenuecode/flight-plan/flight-plan-api/src/main/resources/routes.csv"));
+                new CsvRouteRepository("../flight-plan-api/src/main/resources/routes.csv"));
 
         List<Route> routes = service.getRoutes();
         ItineraryProcessor processor = new ItineraryProcessor(routes);

@@ -20,7 +20,12 @@ public class BestRouteProcessor implements RouteProcessor {
         return itineraries.stream()
                 .map(itinerary -> {
                     String name = nameGenerator.generate(itinerary);
-                    Float total = itinerary.getRoutes().stream().map(Route::getPrice).reduce((a, b) -> a + b).get();
+                    double total = itinerary
+                            .getRoutes()
+                            .stream()
+                            .map(Route::getPrice)
+                            .mapToDouble(Double::valueOf)
+                            .sum();
 
                     return new BestRoute(name, total);
                 })

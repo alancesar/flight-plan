@@ -15,7 +15,7 @@ public class RouteService {
 
     private Function<String, Route> stringToRoute = (line) -> {
         String[] items = line.split(",");
-        Float price = Float.valueOf(items[2]);
+        double price = Double.valueOf(items[2]);
         return new Route(items[0], items[1], price);
     };
 

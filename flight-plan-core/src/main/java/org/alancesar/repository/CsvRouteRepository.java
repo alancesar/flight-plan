@@ -30,18 +30,18 @@ public class CsvRouteRepository implements RouteRepository<String> {
             String content = mapper.apply(input);
             Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public List<Route> readAll(Function<String, Route> mapper) {
-        try {
-            File input = new File(path);
-            InputStream inputStream = new FileInputStream(input);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        try (InputStream inputStream = new FileInputStream(new File(path));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 
             return reader.lines().map(mapper).collect(Collectors.toList());
         } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return Collections.emptyList();
