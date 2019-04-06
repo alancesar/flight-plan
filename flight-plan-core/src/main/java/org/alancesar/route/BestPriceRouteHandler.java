@@ -8,11 +8,11 @@ import org.alancesar.model.Route;
 import java.util.Comparator;
 import java.util.List;
 
-public class BestRouteHandler implements RouteHandler {
+public class BestPriceRouteHandler implements RouteHandler {
 
     private final ItineraryNameGenerator nameGenerator;
 
-    public BestRouteHandler(ItineraryNameGenerator nameGenerator) {
+    public BestPriceRouteHandler(ItineraryNameGenerator nameGenerator) {
         this.nameGenerator = nameGenerator;
     }
 

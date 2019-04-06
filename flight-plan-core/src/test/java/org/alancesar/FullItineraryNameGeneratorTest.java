@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class FullItineraryNameGeneratorTest {
+class FullItineraryNameGeneratorTest {
 
     @Test
-    public void longName() {
+    void longName() {
         Itinerary itinerary = new Itinerary(
                 Arrays.asList(
                         new Route("GRU", "BRC", 0),
@@ -26,14 +26,14 @@ public class FullItineraryNameGeneratorTest {
     }
 
     @Test
-    public void shortName() {
-        Itinerary itinerary = new Itinerary(Arrays.asList(new Route("GRU", "BRC", 0)), true);
+    void shortName() {
+        Itinerary itinerary = new Itinerary(Collections.singletonList(new Route("GRU", "BRC", 0)), true);
         String routeName = new FullItineraryNameGenerator(">>").generate(itinerary);
         Assertions.assertEquals("GRU >> BRC", routeName);
     }
 
     @Test
-    public void noName() {
+    void noName() {
         Itinerary itinerary = new Itinerary(Collections.emptyList(), true);
         String routeName = new FullItineraryNameGenerator("doesn't matter").generate(itinerary);
         Assertions.assertEquals("", routeName);

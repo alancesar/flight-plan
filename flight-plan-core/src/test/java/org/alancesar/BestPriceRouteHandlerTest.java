@@ -2,16 +2,17 @@ package org.alancesar;
 
 import org.alancesar.itinerary.FullItineraryNameGenerator;
 import org.alancesar.itinerary.ItineraryProcessor;
+import org.alancesar.itinerary.PossibleConnectionsItineraryProcessor;
 import org.alancesar.model.BestRoute;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
-import org.alancesar.route.BestRouteHandler;
+import org.alancesar.route.BestPriceRouteHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class BestRouteHandlerTest {
+class BestPriceRouteHandlerTest {
 
     private final List<Route> routes = new RoutesGenerator().generate();
 
@@ -20,11 +21,10 @@ class BestRouteHandlerTest {
 
         String origin = "GRU";
         String destination = "CDG";
-        ItineraryProcessor itineraryProcessorprocessor = new ItineraryProcessor(routes);
-        List<Itinerary> starter = itineraryProcessorprocessor.findStarterItineraries(origin, destination);
-        List<Itinerary> itineraries = itineraryProcessorprocessor.findItineraries(starter, destination);
+        ItineraryProcessor processor = new PossibleConnectionsItineraryProcessor(routes);
+        List<Itinerary> itineraries = processor.process(origin, destination);
 
-        BestRouteHandler bestRouteProcessor = new BestRouteHandler(
+        BestPriceRouteHandler bestRouteProcessor = new BestPriceRouteHandler(
                 new FullItineraryNameGenerator("-"));
 
         BestRoute bestRoute = bestRouteProcessor.find(itineraries);

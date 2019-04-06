@@ -2,11 +2,12 @@ package org.alancesar;
 
 import org.alancesar.itinerary.FullItineraryNameGenerator;
 import org.alancesar.itinerary.ItineraryProcessor;
+import org.alancesar.itinerary.PossibleConnectionsItineraryProcessor;
 import org.alancesar.model.BestRoute;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
 import org.alancesar.repository.CsvRouteRepository;
-import org.alancesar.route.BestRouteHandler;
+import org.alancesar.route.BestPriceRouteHandler;
 import org.alancesar.route.RouteHandler;
 import org.alancesar.service.RouteService;
 import org.alancesar.service.Service;
@@ -29,7 +30,7 @@ public class Main {
         Service<Route> service = new RouteService(new CsvRouteRepository(path));
 
         List<Route> routes = service.getAll();
-        ItineraryProcessor processor = new ItineraryProcessor(routes);
+        ItineraryProcessor processor = new PossibleConnectionsItineraryProcessor(routes);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -39,13 +40,12 @@ public class Main {
             System.out.println("And the destination: ");
             String destination = reader.readLine().toUpperCase();
 
-            List<Itinerary> starter = processor.findStarterItineraries(origin, destination);
-            List<Itinerary> itineraries = processor.findItineraries(starter, destination);
+            List<Itinerary> itineraries = processor.process(origin, destination);
 
             if (itineraries.isEmpty()) {
                 System.out.println("Sorry, any route was found.");
             } else {
-                RouteHandler routeHandler = new BestRouteHandler(new FullItineraryNameGenerator("-"));
+                RouteHandler routeHandler = new BestPriceRouteHandler(new FullItineraryNameGenerator("-"));
                 BestRoute bestRoute = routeHandler.find(itineraries);
                 System.out.println(String.format("Best route: %s > %.0f", bestRoute.getRoute(), bestRoute.getPrice()));
             }

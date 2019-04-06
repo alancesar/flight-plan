@@ -2,10 +2,11 @@ package org.alancesar.controller;
 
 import org.alancesar.itinerary.ItineraryNameGenerator;
 import org.alancesar.itinerary.ItineraryProcessor;
+import org.alancesar.itinerary.PossibleConnectionsItineraryProcessor;
 import org.alancesar.model.BestRoute;
 import org.alancesar.model.Itinerary;
 import org.alancesar.model.Route;
-import org.alancesar.route.BestRouteHandler;
+import org.alancesar.route.BestPriceRouteHandler;
 import org.alancesar.route.RouteHandler;
 import org.alancesar.service.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,16 +33,14 @@ public class FlightPlanController {
                                   @RequestParam("destination") String destination) {
 
         List<Route> routes = service.getAll();
-        ItineraryProcessor processor = new ItineraryProcessor(routes);
-
-        List<Itinerary> starter = processor.findStarterItineraries(origin, destination);
-        List<Itinerary> itineraries = processor.findItineraries(starter, destination);
+        ItineraryProcessor processor = new PossibleConnectionsItineraryProcessor(routes);
+        List<Itinerary> itineraries = processor.process(origin, destination);
 
         if (itineraries.isEmpty()) {
             return null;
         }
 
-        RouteHandler routeHandler = new BestRouteHandler(itineraryNameGenerator);
+        RouteHandler routeHandler = new BestPriceRouteHandler(itineraryNameGenerator);
         return routeHandler.find(itineraries);
     }
 
