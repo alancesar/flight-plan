@@ -9,6 +9,7 @@ import org.alancesar.repository.CsvRouteRepository;
 import org.alancesar.route.BestRouteHandler;
 import org.alancesar.route.RouteHandler;
 import org.alancesar.service.RouteService;
+import org.alancesar.service.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,12 +21,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
-            System.out.println("É necessário informar o path do arquivo de rotas!");
+            System.out.println("It's necessary inform the routes file path as argument!");
             return;
         }
 
         String path = args[0];
-        RouteService service = new RouteService(new CsvRouteRepository(path));
+        Service<Route> service = new RouteService(new CsvRouteRepository(path));
 
         List<Route> routes = service.getAll();
         ItineraryProcessor processor = new ItineraryProcessor(routes);
@@ -51,6 +52,7 @@ public class Main {
 
             System.out.println("Press Q to exit or Enter to continue");
             if (reader.readLine().toUpperCase().equals("Q")) {
+                System.out.println("Bye bye!");
                 return;
             }
         }
