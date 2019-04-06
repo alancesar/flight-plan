@@ -8,11 +8,11 @@ import org.alancesar.model.Route;
 import java.util.Comparator;
 import java.util.List;
 
-public class BestRouteProcessor implements RouteProcessor {
+public class BestRouteHandler implements RouteHandler {
 
     private final ItineraryNameGenerator nameGenerator;
 
-    public BestRouteProcessor(ItineraryNameGenerator nameGenerator) {
+    public BestRouteHandler(ItineraryNameGenerator nameGenerator) {
         this.nameGenerator = nameGenerator;
     }
 
@@ -29,8 +29,7 @@ public class BestRouteProcessor implements RouteProcessor {
 
                     return new BestRoute(name, total);
                 })
-                .sorted(Comparator.comparingDouble(BestRoute::getPrice))
-                .findFirst()
-                .get();
+                .min(Comparator.comparingDouble(BestRoute::getPrice))
+                .orElse(null);
     }
 }
