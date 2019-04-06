@@ -6,7 +6,7 @@ import org.alancesar.repository.RouteRepository;
 import java.util.List;
 import java.util.function.Function;
 
-public class RouteService {
+public class RouteService implements Service<Route> {
 
     private final RouteRepository repository;
 
@@ -23,10 +23,12 @@ public class RouteService {
         this.repository = repository;
     }
 
-    public List<Route> getRoutes() {
+    @Override
+    public List<Route> getAll() {
         return repository.readAll(stringToRoute);
     }
 
+    @Override
     public void save(Route route) {
         repository.write(route, routeToString);
     }
